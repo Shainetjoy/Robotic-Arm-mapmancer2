@@ -1,0 +1,131 @@
+First, control a single servo motor using a joystick. The joystick’s analog values are read by the master Arduino, mapped to servo angles 
+(0–180), and then sent wirelessly via Bluetooth (HC-05/HC-06) to the slave Arduino, which receives the data and moves the servo accordingly.
+
+How it Works
+_____________________________________________________
+           * Joystick → Arduino (Analog Input)
+            
+           * Joystick gives analog values (0–1023).
+            
+           * Arduino → Bluetooth (Serial TX)
+            
+           * Arduino reads joystick position and sends the mapped value (0–180) through Bluetooth.
+            
+           * Bluetooth → Another Arduino (or same Arduino + phone app)
+            
+           * The receiver reads the value and writes it to the servo.
+
+Connections
+
+1. Transmitter Arduino (Joystick + Bluetooth HC-05/06)
+_____________________________________________________________________
+         * Joystick X-axis → A0
+          
+         * Joystick VCC → 5V
+          
+         * Joystick GND → GND
+          
+         * HC-05 TX → Arduino RX (pin 0)
+          
+         * HC-05 RX → Arduino TX (pin 1) (⚠️ use voltage divider: 1K + 2K resistors, since Arduino TX = 5V but HC-05 RX expects 3.3V)
+          
+         * HC-05 VCC → 5V
+          
+         * HC-05 GND → GND
+
+2. Receiver Arduino (Servo + Bluetooth HC-05/06)
+______________________________________________________________________
+         * Servo Signal → Pin 9
+          
+         * Servo VCC → 5V (⚠️ if using bigger servo, use external power supply)
+          
+         * Servo GND → GND
+          
+         * HC-05 TX → Arduino RX (pin 0)
+          
+         * HC-05 RX → Arduino TX (pin 1) (again with voltage divider)
+          
+         * HC-05 VCC → 5V
+          
+         * HC-05 GND → GND
+
+From the project repository, collect the code sketch Transmitter-Code1 and upload it to the transmitter-side Arduino.
+From the project repository, collect the code sketch Receiver Code1 and upload it to the Receiver-side Arduino.
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________
+Configure the joystick so its X-axis controls Servo 1, and its Y-axis controls both Servo 2 and Servo 3 together, allowing the transmitter 
+to send two values (X and Y) for the receiver to control three servos
+
+
+Connections (Receiver Side)
+__________________________________________
+         * ServoX → Pin 9
+        
+         * ServoY1 → Pin 10
+        
+         * ServoY2 → Pin 11
+        
+         * All servo VCC → 5V (or external power if bigger servos)
+        
+         * All servo GND → Arduino GND
+        
+         * Bluetooth HC-05 TX → Arduino RX (pin 0)
+        
+         * Bluetooth HC-05 RX → Arduino TX (pin 1, via voltage divider)
+         
+⚠️ Important Notes
+
+      If you use small SG90 servos, Arduino’s 5V can power up to 2–3.
+      
+      If you use bigger servos (MG995, MG996R, etc.), use an external 5–6V power supply (with common ground to Arduino).
+      
+      The marker byte (255) ensures that the receiver always syncs correctly, even if a byte is lost.
+
+
+Servo on Pin 9 → Joystick X
+
+Servo on Pin 10 → Joystick Y
+
+Servo on Pin 11 → Joystick Y
+
+
+
+From the project repository, collect the code sketch Transmitter-Code2 and upload it to the transmitter-side Arduino.
+From the project repository, collect the code sketch Receiver Code2 and upload it to the Receiver-side Arduino.
+
+Joystick Pinout
+      
+      GND → Ground
+      
+      +5V (VCC) → Power supply (3.3V or 5V depending on module, but Arduino 5V is fine)
+      
+      VRx → X-axis analog output → connect to A0
+      
+      VRy → Y-axis analog output → connect to A1
+
+SW → Switch (digital output when joystick pressed down) → connect to any digital pin (optional, if you want button function)
+
+🔹 Arduino Connection Example
+      
+      Joystick GND → Arduino GND
+      
+      Joystick VCC → Arduino 5V
+      
+      Joystick VRx → Arduino A0
+      
+      Joystick VRy → Arduino A1
+
+Joystick SW → Arduino D2 (optional, use pinMode(2, INPUT_PULLUP); to read press)
+
+🔹 How it works
+
+      When centered → VRx ≈ 512, VRy ≈ 512
+      
+      Move left → VRx decreases (towards 0)
+      
+      Move right → VRx increases (towards 1023)
+      
+      Move forward → VRy increases (towards 1023)
+      
+      Move backward → VRy decreases (towards 0)
+      
+      Press joystick → SW outputs LOW (0V)
