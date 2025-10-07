@@ -1,0 +1,30 @@
+Arduino Bluetooth Joystick Car
+Arduino Robot Car Wireless Control using HC-05 Bluetooth Modules
+
+Components and supplies
+________________________________________________________________________
+* Resistor 1k ohm
+* Arduino UNO
+* Resistor 2k ohm
+* Geared DC Motor, 12 V
+* Dual H-Bridge motor drivers L298
+* Arduino Nano R3
+* Caster Wheel
+* HC-05 Bluetooth Module
+* Jumper wires (generic)
+
+Arduino Robot Car Control Using HC-05 Bluetooth Module
+We will start with the Bluetooth communication, and for that purpose we need two HC-05 Bluetooth modules which need to be configured as master and slave devices. 
+
+L298N to Arduino Pin Configuration
+
+            L298N Pin	   Function	                              Arduino Pin
+            ENA	         Left motor speed (PWM)	            D5
+            IN1	         Left motor direction  	            D6
+            IN2	         Left motor direction 	            D7
+            ENB	         Right motor speed (PWM)	            D9
+            IN3	         Right motor direction	            D10
+            IN4	         Right motor direction	            D11
+            12V / VCC	   Motor power	External supply         (6–12V)
+            GND	         Motor + Arduino common ground	      GND
+            5V	         Optional logic voltage	           5V (if needed)
