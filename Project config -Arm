@@ -51,7 +51,7 @@ ______________________________________________________________________
 
 From the project repository, collect the code sketch Transmitter-Code1 and upload it to the transmitter-side Arduino.
 From the project repository, collect the code sketch Receiver Code1 and upload it to the Receiver-side Arduino.
-_____________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________
 Configure the joystick so its X-axis controls Servo 1, and its Y-axis controls both Servo 2 and Servo 3 together, allowing the transmitter 
 to send two values (X and Y) for the receiver to control three servos
 
@@ -102,7 +102,7 @@ Joystick Pinout
       
       VRy → Y-axis analog output → connect to A1
 
-SW → Switch (digital output when joystick pressed down) → connect to any digital pin (optional, if you want button function)
+       SW → Switch (digital output when joystick pressed down) → connect to any digital pin (optional, if you want button function)
 
 🔹 Arduino Connection Example
       
@@ -129,3 +129,36 @@ Joystick SW → Arduino D2 (optional, use pinMode(2, INPUT_PULLUP); to read pres
       Move backward → VRy decreases (towards 0)
       
       Press joystick → SW outputs LOW (0V)
+__________________________________________________________________________________________________________________________________________________________________
+Add one more joystick and one more servo, where the second joystick controls only the X-axis movement of Servo 4.
+
+New Setup
+
+Joystick 1 → controls Servo1 (X)(base servo), Servo2 (Y)(left), Servo3 (opposite Y)(right)
+Joystick 2 → controls Servo4 (X)(Griper servo)
+
+Your Current Setup
+_______________________________________________________________________________________________________________
+
+Joystick1 (controls servo 1, 2, 3)
+
+       * GND → Arduino GND
+       * VCC → Arduino 5V
+       * VRx → A0 → Servo1 X
+       * VRy → A1 → Servo2/3 Y
+       * SW → optional digital pin
+
+Joystick2 (controls servo 4 X-axis only)
+
+       * GND → Arduino GND
+       * VCC → Arduino 5V
+       * VRx → A2 → Servo4 X
+       * VRy → leave unconnected or connect to analog pin but ignore in code 
+       * SW → optional digital pin
+
+
+
+From the project repository, collect the code sketch Transmitter-Code3 and upload it to the transmitter-side Arduino.
+From the project repository, collect the code sketch Receiver Code3 and upload it to the Receiver-side Arduino.
+
+
